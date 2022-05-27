@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>AUTHOR LIST</h1>
+    <a href="{% url 'author-create' %}"> create author </a>
+    {% comment %} 該視圖默認將上下文（書籍列表）作為object_list 和 book_list 別名傳遞 {% endcomment %}
+    {% if author_list %}
+    <ul>
+        {% for author in author_list %}
+        <li>
+            <a href="{{author.get_absolute_url}}">{{ author.first_name }}, {{ author.last_name }} ({{ author.date_of_birth }} - {% if author.date_of_death %}{{ author.date_of_death }}{%endif%})</a>
+            <a href="{% url 'author-update' author.pk %}"> update </a>
+            <a href="{% url 'author-delete' author.pk %}"> delete </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>There are no books in the library.</p>
+    {% endif %}
+{% endblock %}

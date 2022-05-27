@@ -1,0 +1,39 @@
+__init__.py 是一個空文件，指示 Python 將此目錄視為 Python 套件。
+settings.py  包含所有的網站設置。這是可以註冊所有創建的應用的地方，也是靜態文件，數據庫配置的地方，等等。
+urls.py定義了網站url到view的映射。雖然這裡可以包含所有的url，但是更常見的做法是把應用相關的url包含在相關應用中，你可以在接下來的教程裡看到。
+wsgi.py  幫助Django應用和網絡服務器間的通訊。你可以把這個當作模板
+
+python3 manage.py startapp catalog
+視圖函數就是views.py，
+模型就是models.py，
+測試是tests.py，
+網站管理設置是admin.py，
+註冊應用是apps.py
+
+建完catalog後，要去locallibrary/settings修改
+INSTALLED_APPS=[
+    ...,
+    'catalog.apps.CatalogConfig'
+]
+
+每次模型改變，都需要運行
+python3 manage.py makemigrations    創建但不實施搬移
+python3 manage.py migrate           真的搬
+
+開server -->要進到locallibrary/locallibrary
+python3 manage.py runserver
+
+在catalog/views 查詢資料庫
+
+設定權限
+models.py
+Class BookInt
+    class mata
+        permissions = (("can_mark_returned", "Set book as returned"),)   
+使用權限
+perms.catalog.can_mark_returned
+->設定完要指定權限給group的成員(在admin網頁設定!)
+
+視圖+權限
+class MyView(PermissionRequiredMixin, View):
+    permission_required = 'catalog.can_mark_returned'
